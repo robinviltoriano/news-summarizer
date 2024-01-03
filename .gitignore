@@ -30,4 +30,4 @@ instance/
 .env
 
 # Config file containing sensitive information
-config.py
+main.ipynb
