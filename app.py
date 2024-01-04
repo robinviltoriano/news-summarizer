@@ -3,7 +3,7 @@ from datetime import datetime
 from scrap_news import News
 import requests
 
-import os
+import pytz
 from config import Config
 from dotenv import load_dotenv
 load_dotenv()
@@ -14,7 +14,9 @@ app.config.from_object(Config)
 
 
 def index():
-    my_date = datetime.now()
+    timezone = 'Australia/Perth'
+    py_timezone = pytz.timezone(timezone)
+    my_date = datetime.now(py_timezone)
     
     articles = News()
     articles.get_news_id()
