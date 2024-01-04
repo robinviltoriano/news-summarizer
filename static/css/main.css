@@ -10,7 +10,7 @@ h1{
 
 table {
     margin: auto;
-    width: 50%; /* Adjust the width as needed */
+    width: 80%; /* Adjust the width as needed */
     border-collapse: collapse;
     background-color: #ffffff; /* White background for the table */
     border: 4px solid black; /* Add border to the table */
@@ -32,12 +32,13 @@ img{
     height: 130px;
     display: block;
     margin: 0 auto;
+    border-radius:40px;
 }
 
 #headline{
     font-weight: bold;
     text-align: left;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 #date{
@@ -47,11 +48,6 @@ img{
 
 #news{
     font-size: 15px;
-}
-
-table{
-    width:80%;
-    margin:auto;
 }
 
 td {
@@ -73,5 +69,5 @@ th {
 
 #summarized_text{
     font-size: 17px;
-    text-align: left;
+    text-align: justify;
 }

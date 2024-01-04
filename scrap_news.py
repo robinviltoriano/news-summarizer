@@ -67,6 +67,7 @@ class News:
             self.news_dict[id] = {'original_text':news}
             self.news_dict[id]['headline'] = headline
             self.news_dict[id]['img'] = img_scr
+            self.news_dict[id]['url'] = url
             self.news_dict[id]['summarized_text'] = '-'
         
     @staticmethod
