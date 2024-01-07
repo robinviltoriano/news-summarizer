@@ -17,51 +17,54 @@
     </div>
     <p id="date">Current Date: {{ my_date.strftime('%d-%m-%Y') }}</p>
 
-    <table id="newsTable">
-      <thead>
-        <tr>
-          <th>Headline</th>
-          <th>Summarized News</th>
-        </tr>
-      </thead>
-      <tbody id="newsBody">
-        <!-- JavaScript will populate this section -->
-      </tbody>
-    </table>
-
+    <div id="json-table-container"></div>
     <script>
-      // Example JSON data
-      var jsonData = {{ news_dictionary | tojson | safe }};
+      const jsonData = {{ news_dictionary | tojson | safe }};
+      const tableContainer = document.getElementById('json-table-container');
+      const table = document.createElement('table');
+      table.setAttribute('border', '1');
 
-      // Function to create a table row for each entry in the JSON data
-      function createTableRows() {
-          var tableBody = document.getElementById("newsBody");
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      const headers = ['Headline', 'Summarized Text'];
 
-          for (var key in jsonData) {
-              if (jsonData.hasOwnProperty(key)) {
-                  var row = tableBody.insertRow();
-                  var cell1 = row.insertCell(0);
-                  var cell2 = row.insertCell(1);
+      headers.forEach(headerText => {
+          const th = document.createElement('th');
+          th.textContent = headerText;
+          headerRow.appendChild(th);
+      });
 
-                  cell1.innerHTML = `
-                <p id='headline'>${jsonData[key].headline}</p>
-                <img id='table_img' src='${jsonData[key].img}' alt='News Image'>
-            `;
-                  cell2.innerHTML = `
-                <p id='summarized_text'>
-                  ${jsonData[key].summarized_text}
-                    <br>
-                    <a href='${jsonData[key].url}' target='_blank'>Click here for the full news</a>
-                </p>
-            `;
-            // Ensure line breaks are preserved
-            cell2.style.whiteSpace = "pre-line";
-              }
-          }
-      }
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
 
-      // Call the function to populate the table
-      createTableRows();
+      const tbody = document.createElement('tbody');
+      jsonData.forEach(data => {
+          const tr = document.createElement('tr');
+
+          // Customize cell 1
+          const cell1 = document.createElement('td');
+          cell1.innerHTML = `
+              <p id='headline'>${data.headline}</p>
+              <img id='table_img' src='${data.img}' alt='News Image'>
+          `;
+          tr.appendChild(cell1);
+
+          // Customize cell 2
+          const cell2 = document.createElement('td');
+          cell2.innerHTML = `
+              <p id='summarized_text'>
+                  ${data.summarized_text}
+                  <br>
+                  <a href='${data.url}' target='_blank'>Click here for the full news</a>
+              </p>
+          `;
+          tr.appendChild(cell2);
+
+          tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      tableContainer.appendChild(table);
     </script>
   </body>
 </html>
