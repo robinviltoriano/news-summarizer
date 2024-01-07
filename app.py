@@ -34,7 +34,7 @@ def index():
     # Query the data from the table
     data = YourTable.query.all()
     news_dictionary = [{"headline": item.headline, "img": item.img,"url": item.url,"summarized_text": item.summarized_text} for item in data]
-    return render_template('index2.html',my_date=my_date,news_dictionary = news_dictionary)
+    return render_template('index.html',my_date=my_date,news_dictionary = news_dictionary)
 
 if __name__=='__main__':
     app.run(debug=True)
