@@ -37,4 +37,4 @@ def index():
     return render_template('index.html',my_date=my_date,news_dictionary = news_dictionary)
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(debug=False)
