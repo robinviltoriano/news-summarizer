@@ -31,3 +31,6 @@ instance/
 
 # Config file containing sensitive information
 main.ipynb
+
+#app testing
+testing/
