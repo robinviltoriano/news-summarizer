@@ -101,6 +101,5 @@ class News:
         text = re.sub(r'&amp;', '', text)
         text = re.sub(r'[_"\-;%()|+&=*%:#$@\[\]/]', ' ', text)
         text = re.sub(r'<br />', ' ', text)
-        text = re.sub(r'\'', ' ', text)
 
         return text
