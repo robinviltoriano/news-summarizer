@@ -10,7 +10,7 @@ h1{
 
 table {
     margin: auto;
-    width: 80%; /* Adjust the width as needed */
+    width: 90%; /* Adjust the width as needed */
     border-collapse: collapse;
     background-color: #ffffff; /* White background for the table */
     border: 4px solid black; /* Add border to the table */
@@ -44,6 +44,7 @@ img{
 #date{
     text-align: left;
     font-size: 15px;
+    padding-left: 17px;
 }
 
 #news{
@@ -70,4 +71,16 @@ th {
 #summarized_text{
     font-size: 17px;
     text-align: justify;
+}
+
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 16px;
+    background-color:black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
 }
