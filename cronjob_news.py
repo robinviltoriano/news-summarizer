@@ -40,8 +40,6 @@ def get_news():
 def store_data(json_file):
     DATABASE_URL = os.environ.get('DATABASE_URL')   
     conn = psycopg2.connect(DATABASE_URL)
-    # conn = psycopg2.connect(database="postgres", user="postgres", 
-    #                         password="root", host="localhost", port="5432") 
     cursor = conn.cursor()
 
     cursor.execute(
