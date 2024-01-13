@@ -10,16 +10,14 @@ class News:
         self.default_url = "https://abc.net.au/news/"
 
     def get_news_id(self):
-        url = 'https://www.abc.net.au/news/sa'
+        url = 'https://www.abc.net.au/news'
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Replace 'your_selector' with the appropriate CSS selector for the news headlines
-        list_items = soup.select("ul.List_unstyled__BUts_ li.LinkList_listItem__NLiw1")
+        data_uris = [div['data-uri'] for div in soup.find_all('div', {'data-component': 'VolumeCard'})]
 
-        for item in list_items:
-            data_uri = item.find('div', {'data-component': 'ListCard'}).get('data-uri')
-            id = data_uri.split('/')[-1]
+        for uri in data_uris:
+            id = uri.split('/')[-1]
             self.news_ids.append(id)
 
     @staticmethod
