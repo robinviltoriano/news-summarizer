@@ -33,7 +33,10 @@ def get_news():
     for id,v in news_dictionary.items():
         
         output = query({"inputs": v['original_text']})
-        articles.news_dict[id]['summarized_text'] = output[0]['summary_text']
+        try:
+            articles.news_dict[id]['summarized_text'] = output[0]['summary_text']
+        except:
+            articles.news_dict[id]['summarized_text'] = 'Failed to summarize'
         
     return articles.news_dict
 
