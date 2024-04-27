@@ -2,23 +2,31 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import json
+import pytz
+from datetime import datetime
 
 class News:
     def __init__(self):
-        self.news_ids = []
+        self.news_ids = set()
         self.news_dict = {}
         self.default_url = "https://abc.net.au/news/"
+        
+        timezone = 'Australia/Perth'
+        py_timezone = pytz.timezone(timezone)
+        self.my_date = datetime.now(py_timezone)
 
     def get_news_id(self):
-        url = 'https://www.abc.net.au/news'
+        url = 'https://www.abc.net.au/news/sa'
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        data_uris = [div['data-uri'] for div in soup.find_all('div', {'data-component': 'VolumeCard'})]
+        data_uris = soup.find_all('div', {'data-component': 'ListCard'})
 
         for uri in data_uris:
-            id = uri.split('/')[-1]
-            self.news_ids.append(id)
+            id = uri.get('data-uri').split('/')[-1]
+            self.news_ids.add(id)
+            
+        self.news_ids = list(self.news_ids)
 
     @staticmethod
     def get_news(url):
@@ -67,6 +75,7 @@ class News:
             self.news_dict[id]['img'] = img_scr
             self.news_dict[id]['url'] = url
             self.news_dict[id]['summarized_text'] = '-'
+            self.news_dict[id]['time'] = self.my_date
         
     @staticmethod
     def clean_text(text, remove_stopwords=True):

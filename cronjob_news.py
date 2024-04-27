@@ -13,13 +13,13 @@ def get_news():
     articles.get_news_id()
     articles.get_news_dict()
     
-    news_dictionary= articles.news_dict
+    news_dictionary = articles.news_dict
     
-    for idx,art in articles.news_dict.items():
+    for idx,art in news_dictionary.items():
         try:
-            articles.news_dict[idx]['original_text']=News.clean_text(art['original_text'].split('Key points:')[1],remove_stopwords=False)
+            news_dictionary[idx]['original_text'] = News.clean_text(art['original_text'].split('Key points:')[1],remove_stopwords = False)
         except:
-            articles.news_dict[idx]['original_text'] = News.clean_text(art['original_text'],remove_stopwords=False)
+            news_dictionary[idx]['original_text'] = News.clean_text(art['original_text'],remove_stopwords = False)
     
     #Summarize the news
     API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
@@ -27,7 +27,7 @@ def get_news():
     headers = {"Authorization": f"Bearer {API_TOKEN}"}
     
     def query(payload):
-        response = requests.post(API_URL, headers=headers, json=payload)
+        response = requests.post(API_URL, headers = headers, json = payload)
         return response.json()
 	
     for id,v in news_dictionary.items():
@@ -54,7 +54,7 @@ def store_data(json_file):
     cursor.execute(
                 '''
                 CREATE TABLE news_summary (id TEXT PRIMARY KEY,original_text TEXT, \
-                headline TEXT, img TEXT, url TEXT, summarized_text TEXT);
+                headline TEXT, img TEXT, url TEXT, summarized_text TEXT, time TIMESTAMP);
                 '''
             )
 
@@ -62,10 +62,11 @@ def store_data(json_file):
     for key in json_file.keys():
         cursor.execute(
             """
-            INSERT INTO news_summary (id,original_text, headline, img,url, summarized_text)
-            VALUES (%s,%s, %s, %s,%s,%s);
+            INSERT INTO news_summary (id,original_text, headline, img,url, summarized_text, time)
+            VALUES (%s,%s, %s, %s,%s,%s, %s);
             """,
-            (key,json_file[key]['original_text'], json_file[key]['headline'], json_file[key]['img'],json_file[key]['url'],json_file[key]['summarized_text'])
+            (key,json_file[key]['original_text'], json_file[key]['headline'], json_file[key]['img'],
+             json_file[key]['url'], json_file[key]['summarized_text'], json_file[key]['time'])
         )
 
     # Commit the changes and close the connection
