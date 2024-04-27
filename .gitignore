@@ -34,3 +34,4 @@ main.ipynb
 
 #app testing
 testing/
+__pycache__/scrap_news.cpython-311.pyc
