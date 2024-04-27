@@ -1,8 +1,5 @@
 from flask import Flask, render_template
-from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-import pytz
-# import json
 import os
 
 app = Flask(__name__)
@@ -19,20 +16,19 @@ class YourTable(db.Model):
     img = db.Column(db.String)
     url = db.Column(db.String)
     summarized_text = db.Column(db.String)
+    time = db.Column(db.DateTime)
 
 
 
 @app.route('/',methods=['GET'])
 def index():
-    timezone = 'Australia/Perth'
-    py_timezone = pytz.timezone(timezone)
-    my_date = datetime.now(py_timezone)
     
     # Create the tables (if not already created)
     db.create_all()
 
     # Query the data from the table
     data = YourTable.query.all()
+    my_date = data[0].time
     news_dictionary = [{"headline": item.headline, "img": item.img,"url": item.url,"summarized_text": item.summarized_text} for item in data]
     return render_template('index.html',my_date=my_date,news_dictionary = news_dictionary)
 
