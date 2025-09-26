@@ -30,8 +30,8 @@ def index():
     # Query the data from the table
     data = YourTable.query.all()
     news_dictionary = [{"headline": item.headline, "img": item.img,"url": item.url,"summarized_text": item.summarized_text} for item in data]
-    my_date = news_dictionary[0].get('time') if news_dictionary else None
-    return render_template('index.html', my_date = my_date, news_dictionary = news_dictionary)
+    # my_date = news_dictionary[0].get('time') if news_dictionary else None
+    return render_template('index.html', news_dictionary = news_dictionary)
 
 if __name__=='__main__':
     app.run(debug=False)
