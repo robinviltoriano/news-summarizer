@@ -33,7 +33,7 @@ class News:
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        art = soup.find('div',id='body')
+        art = soup.find('div',class_='ArticleRender_article__7i2EW')
 
         if art:
             return art.get_text(strip=True)
